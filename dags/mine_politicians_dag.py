@@ -10,21 +10,20 @@ default_args = {
     'retry_delay': timedelta(minutes=15),  # Waittime between retries
 }
 
-dag = DAG(dag_id="svpol_miner_dag",
+dag = DAG(dag_id="mine_politicians_dag",
           default_args=default_args,
-          schedule_interval="1 0 * * *",
-          start_date=datetime(2021, 9, 1)
+          schedule_interval="0 2 * * *",
+          start_date=datetime(2021, 10, 20)
           )
 
 dag.doc_md = """
-## svpol twitter miner
-## svpol twitter miner updater
-This job gets the latest tweets by searching for #svpol, stores 
+## Mine Politicians Updater
+This job downloads the latest tweet from a lost of Swedish political twitter accounts
 """
 
 start = DummyOperator(task_id="Start", dag=dag)
-run_script = BashOperator(task_id="mine_tweets",
-                          bash_command="python3 /home/chrolss/PycharmProjects/svpol/miner.py",
+run_script = BashOperator(task_id="mine_politicians",
+                          bash_command="python3 /home/chrolss/PycharmProjects/svpol/mine_politicians.py",
                           dag=dag)
 
 start >> run_script

@@ -20,6 +20,8 @@ dag.doc_md = """
 ## Hashtag extractor
 This job extracts and accumulates the hashtags found in all #svpol tweets.
 
+Lastly it copies its sqlite database to the svpol-dash project.
+
 Serves as a basis for further analysis in the dash application.
 """
 
@@ -28,4 +30,9 @@ run_script = BashOperator(task_id="extract_and_store_hashtags",
                           bash_command="python3 /home/chrolss/PycharmProjects/svpol/analysis.py",
                           dag=dag)
 
-start >> run_script
+copy_database = BashOperator(task_id="copy_sqlite_db",
+                            bash_command="cp /home/chrolss/PycharmProjects/svpol/data/tweets.db /home/chrolss/PycharmProjects/svpol-dash/data/tweets.db",
+                            dag=dag)
+
+
+start >> run_script >> copy_database

@@ -1,5 +1,8 @@
 # svpol project
 
+Data gathering and ETL repo of my #svpol project. This project contains all data download and manipulation scripts
+as well as the airflow dags.
+
 ## Data Gathering
 Daily pull of tweets containing #svpol hastag. Stored in `data/tweets` on format `yyyy-mm-dd.json`
 
